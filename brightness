@@ -1,0 +1,13 @@
+value=${1:-0.8}
+
+if echo "$value > 1.0" | bc -l | grep -q 1
+then
+  value=1
+fi
+
+if echo "$value < 0.1" | bc -l | grep -q 1
+then
+  value=0.1
+fi
+
+xrandr --output $(xrandr --listmonitors | awk '$1 == "0:" {print $4}') --brightness $value
